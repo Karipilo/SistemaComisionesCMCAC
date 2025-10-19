@@ -3,55 +3,97 @@
 // Propósito: Visualizar los datos de RESUMEN_COMISIONES_AUDITORIAS_MES
 // ===============================================================
 
+import java.sql.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.sql.*;
 
 public class MostrarResumen {
 
     public static void mostrar() {
-        Connection conn = ConexionOracle.conectar();
-        if (conn == null)
-            return;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        String sql = "SELECT mes_proceso, anno_proceso, nombre_profesion, " +
-                "total_auditores, total_con_auditorias, total_sin_auditorias, " +
-                "monto_total_auditorias, monto_total_comisiones " +
-                "FROM RESUMEN_COMISIONES_AUDITORIAS_MES";
+        try {
+            conn = ConexionOracle.conectar();
+            if (conn == null) {
+                JOptionPane.showMessageDialog(null,
+                        "❌ No se pudo conectar a la base de datos.\nRevisa la consola para más detalles.",
+                        "Error de Conexión",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-        try (PreparedStatement ps = conn.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery()) {
+            // Usar los nombres reales de las columnas de la tabla
+            String sql = "SELECT mes_proceso, anno_proceso, total_auditores, " +
+                    "NVL(suma_comision_audit, 0) as suma_comision_audit, " +
+                    "NVL(suma_costo_empresa, 0) as suma_costo_empresa " +
+                    "FROM RESUMEN_COMISIONES_AUDITORIAS_MES " +
+                    "ORDER BY anno_proceso DESC, mes_proceso DESC";
+
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
 
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("Mes");
             model.addColumn("Año");
-            model.addColumn("Profesión");
             model.addColumn("Total Auditores");
-            model.addColumn("Con Auditorías");
-            model.addColumn("Sin Auditorías");
-            model.addColumn("Monto Auditorías");
-            model.addColumn("Monto Comisiones");
+            model.addColumn("Suma Comisión Auditoría");
+            model.addColumn("Suma Costo Empresa");
 
+            int rowCount = 0;
             while (rs.next()) {
                 model.addRow(new Object[] {
-                        rs.getInt(1), rs.getInt(2), rs.getString(3),
-                        rs.getInt(4), rs.getInt(5), rs.getInt(6),
-                        rs.getDouble(7), rs.getDouble(8)
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        String.format("$%,.2f", rs.getDouble(4)),
+                        String.format("$%,.2f", rs.getDouble(5))
                 });
+                rowCount++;
+            }
+
+            if (rowCount == 0) {
+                JOptionPane.showMessageDialog(null,
+                        "ℹ️ No hay datos en el resumen.\n" +
+                                "Ejecuta 'Procesar Comisiones' primero.",
+                        "Sin Datos",
+                        JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
 
             JTable table = new JTable(model);
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+
             JScrollPane scrollPane = new JScrollPane(table);
 
-            JFrame frame = new JFrame("Resumen de Comisiones Mensual");
-            frame.setSize(900, 400);
+            JFrame frame = new JFrame("📊 Resumen de Comisiones Mensual - " + rowCount + " registros");
+            frame.setSize(800, 450);
             frame.add(scrollPane);
             frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setVisible(true);
 
+            System.out.println("✅ Resumen mostrado: " + rowCount + " registros");
+
         } catch (SQLException e) {
+            System.err.println("❌ Error SQL al mostrar resumen: " + e.getMessage());
             JOptionPane.showMessageDialog(null,
-                    " Error al mostrar el resumen: " + e.getMessage());
+                    "❌ Error al mostrar el resumen:\n" + e.getMessage(),
+                    "Error SQL",
+                    JOptionPane.ERROR_MESSAGE);
+        } finally {
+            // Cerrar recursos en orden inverso
+            try {
+                if (rs != null)
+                    rs.close();
+                if (ps != null)
+                    ps.close();
+                if (conn != null)
+                    ConexionOracle.cerrarConexion(conn);
+            } catch (SQLException e) {
+                System.err.println("⚠️ Error al cerrar recursos: " + e.getMessage());
+            }
         }
     }
 }
