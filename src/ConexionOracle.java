@@ -86,8 +86,10 @@ public class ConexionOracle {
             props.setProperty("password", config.getProperty("db.password", PASSWORD));
 
             // URL de conexión con TNS_ADMIN incorporado
+            // Usar URI encoding para la ruta si tiene espacios
             String serviceName = config.getProperty("db.service", SERVICE_NAME);
-            String url = "jdbc:oracle:thin:@" + serviceName + "?TNS_ADMIN=" + walletPath;
+            String encodedWalletPath = walletPath.replace(" ", "%20");
+            String url = "jdbc:oracle:thin:@" + serviceName + "?TNS_ADMIN=" + encodedWalletPath;
 
             System.out.println("🔌 Conectando a Oracle Cloud...");
             System.out.println("   Servicio: " + serviceName);
