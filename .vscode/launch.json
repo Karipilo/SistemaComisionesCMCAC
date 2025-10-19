@@ -6,6 +6,13 @@
             "name": "VentanaPrincipal",
             "request": "launch",
             "mainClass": "VentanaPrincipal",
+            "projectName": "SistemaComisionesCMCAC_de438f96"
+        },
+        {
+            "type": "java",
+            "name": "VentanaPrincipal",
+            "request": "launch",
+            "mainClass": "VentanaPrincipal",
             "projectName": "SistemaComisionesCMCAC_758208df"
         },
         {
