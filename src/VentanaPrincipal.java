@@ -3,9 +3,9 @@
 // Propósito: Interfaz principal del sistema con botones de acción
 // ===============================================================
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import javax.swing.*;
 
 public class VentanaPrincipal extends JFrame {
 
