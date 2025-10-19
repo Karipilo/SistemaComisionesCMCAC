@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "VentanaPrincipal",
+            "request": "launch",
+            "mainClass": "VentanaPrincipal",
+            "projectName": "SistemaComisionesCMCAC_4444ac50"
+        },
+        {
+            "type": "java",
+            "name": "Ejecutar Ventana Principal",
+            "request": "launch",
+            "mainClass": "VentanaPrincipal",
+            "projectName": "SistemaComisionesCMCAC"
+        }
+    ]
+}
