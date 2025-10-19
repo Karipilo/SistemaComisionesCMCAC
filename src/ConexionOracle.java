@@ -1,7 +1,4 @@
-// ===============================================================
-// Clase: ConexionOracle
-// Propósito: Gestionar la conexión a Oracle Cloud Autonomous Database
-// ===============================================================
+// Gestionar la conexión a Oracle Cloud Autonomous Database
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +10,7 @@ import java.util.Properties;
 
 public class ConexionOracle {
 
-    // Configuración por defecto (puedes cambiarla según tu BD)
+    // Configuración por defecto
     private static final String SERVICE_NAME = "twqz0kc12atcw6lw_high";
     private static final String USER = "Eval_2";
     private static final String PASSWORD = "DuocUc..2025";
@@ -21,9 +18,8 @@ public class ConexionOracle {
     // Ruta relativa al wallet desde la raíz del proyecto
     private static final String WALLET_PATH = "./config/wallet";
 
-    /**
-     * Obtiene la ruta absoluta del wallet
-     */
+    // Obtiene la ruta absoluta del wallet
+
     private static String getWalletAbsolutePath() {
         File walletDir = new File(WALLET_PATH);
         String absolutePath = walletDir.getAbsolutePath();
@@ -31,13 +27,12 @@ public class ConexionOracle {
         // Convertir barras invertidas a barras normales para Java
         absolutePath = absolutePath.replace("\\", "/");
 
-        System.out.println("📁 Ruta del wallet: " + absolutePath);
+        System.out.println("Ruta del wallet: " + absolutePath);
         return absolutePath;
     }
 
-    /**
-     * Intenta cargar configuración desde archivo properties (opcional)
-     */
+    // Intenta cargar configuración desde archivo properties (opcional)
+
     private static Properties loadConfig() {
         Properties config = new Properties();
         File configFile = new File("./config/database.properties");
@@ -45,17 +40,16 @@ public class ConexionOracle {
         if (configFile.exists()) {
             try (FileInputStream fis = new FileInputStream(configFile)) {
                 config.load(fis);
-                System.out.println("⚙️ Configuración cargada desde database.properties");
+                System.out.println("Configuración cargada desde database.properties");
             } catch (IOException e) {
-                System.out.println("⚠️ No se pudo cargar database.properties, usando valores por defecto");
+                System.out.println(" No se pudo cargar database.properties, usando valores por defecto");
             }
         }
         return config;
     }
 
-    /**
-     * Establece conexión con Oracle Cloud
-     */
+    // Establece conexión con Oracle Cloud
+
     public static Connection conectar() {
         try {
             // Cargar configuración (si existe)
@@ -67,7 +61,7 @@ public class ConexionOracle {
             // Verificar que el wallet existe
             File walletDir = new File(walletPath);
             if (!walletDir.exists() || !walletDir.isDirectory()) {
-                System.err.println("❌ ERROR: No se encontró el wallet en: " + walletPath);
+                System.err.println("ERROR: No se encontró el wallet en: " + walletPath);
                 System.err.println("   Por favor, coloca los archivos del wallet en la carpeta config/wallet/");
                 return null;
             }
@@ -116,16 +110,14 @@ public class ConexionOracle {
         }
     }
 
-    /**
-     * Cierra la conexión de forma segura
-     */
+    // Cerrar la conexión de forma segura
     public static void cerrarConexion(Connection conn) {
         if (conn != null) {
             try {
                 conn.close();
                 System.out.println("🔌 Conexión cerrada correctamente");
             } catch (SQLException e) {
-                System.err.println("⚠️ Error al cerrar la conexión: " + e.getMessage());
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
             }
         }
     }

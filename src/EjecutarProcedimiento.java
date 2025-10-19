@@ -1,7 +1,4 @@
-// ===============================================================
-// Clase: EjecutarProcedimiento
-// Propósito: Ejecuta el procedimiento PRC_RESUMIR_COMISIONES
-// ===============================================================
+// Ejecuta el procedimiento PRC_RESUMIR_COMISIONES
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -19,7 +16,7 @@ public class EjecutarProcedimiento {
             conn = ConexionOracle.conectar();
             if (conn == null) {
                 JOptionPane.showMessageDialog(null,
-                        "❌ No se pudo conectar a la base de datos.\nRevisa la consola para más detalles.",
+                        "No se pudo conectar a la base de datos.\nRevisa la consola para más detalles.",
                         "Error de Conexión",
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -49,7 +46,7 @@ public class EjecutarProcedimiento {
             // Validar rango del mes
             if (mes < 1 || mes > 12) {
                 JOptionPane.showMessageDialog(null,
-                        "❌ El mes debe estar entre 1 y 12",
+                        " El mes debe estar entre 1 y 12",
                         "Error de Validación",
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -58,7 +55,7 @@ public class EjecutarProcedimiento {
             // Validar año
             if (anno < 2000 || anno > 2100) {
                 JOptionPane.showMessageDialog(null,
-                        "❌ El año debe estar entre 2000 y 2100",
+                        "El año debe estar entre 2000 y 2100",
                         "Error de Validación",
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -69,12 +66,12 @@ public class EjecutarProcedimiento {
             cs.setInt(1, mes);
             cs.setInt(2, anno);
 
-            System.out.println("🔄 Ejecutando procedimiento para " + mes + "/" + anno + "...");
+            System.out.println("Ejecutando procedimiento para " + mes + "/" + anno + "...");
             cs.execute();
-            System.out.println("✅ Procedimiento ejecutado correctamente");
+            System.out.println("Procedimiento ejecutado correctamente");
 
             JOptionPane.showMessageDialog(null,
-                    "✅ Proceso completado correctamente.\n" +
+                    "Proceso completado correctamente.\n" +
                             "Mes: " + mes + "\nAño: " + anno,
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -84,13 +81,13 @@ public class EjecutarProcedimiento {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null,
-                    "❌ Error: Debes ingresar valores numéricos válidos.\n" + e.getMessage(),
+                    "Error: Debes ingresar valores numéricos válidos.\n" + e.getMessage(),
                     "Error de Formato",
                     JOptionPane.ERROR_MESSAGE);
         } catch (SQLException e) {
-            System.err.println("❌ Error SQL: " + e.getMessage());
+            System.err.println("Error SQL: " + e.getMessage());
             JOptionPane.showMessageDialog(null,
-                    "❌ Error al ejecutar el procedimiento:\n" +
+                    "Error al ejecutar el procedimiento:\n" +
                             e.getMessage() + "\n\nRevisa la consola para más detalles.",
                     "Error SQL",
                     JOptionPane.ERROR_MESSAGE);
@@ -102,7 +99,7 @@ public class EjecutarProcedimiento {
                 if (conn != null)
                     ConexionOracle.cerrarConexion(conn);
             } catch (SQLException e) {
-                System.err.println("⚠️ Error al cerrar recursos: " + e.getMessage());
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
             }
         }
     }

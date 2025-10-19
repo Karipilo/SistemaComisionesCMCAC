@@ -1,7 +1,4 @@
-// ===============================================================
-// Clase: VentanaPrincipal
-// Propósito: Interfaz principal del sistema con botones de acción
-// ===============================================================
+// Interfaz principal del sistema con botones de acción
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
