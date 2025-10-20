@@ -18,7 +18,7 @@ public class MostrarErrores {
             conn = ConexionOracle.conectar();
             if (conn == null) {
                 JOptionPane.showMessageDialog(null,
-                        "❌ No se pudo conectar a la base de datos.\nRevisa la consola para más detalles.",
+                        "No se pudo conectar a la base de datos.\nRevisa la consola para más detalles.",
                         "Error de Conexión",
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -51,7 +51,7 @@ public class MostrarErrores {
 
             if (rowCount == 0) {
                 JOptionPane.showMessageDialog(null,
-                        "✅ No hay errores registrados.\n¡El sistema está funcionando correctamente!",
+                        "No hay errores registrados.\n¡El sistema está funcionando correctamente!",
                         "Sin Errores",
                         JOptionPane.INFORMATION_MESSAGE);
                 return;
@@ -69,7 +69,7 @@ public class MostrarErrores {
 
             JScrollPane scrollPane = new JScrollPane(table);
 
-            JFrame frame = new JFrame("⚠️ Registro de Errores - " + rowCount + " errores encontrados");
+            JFrame frame = new JFrame("Registro de Errores - " + rowCount + " errores encontrados");
             frame.setSize(1100, 450);
             frame.add(scrollPane);
             frame.setLocationRelativeTo(null);
@@ -79,9 +79,9 @@ public class MostrarErrores {
             System.out.println("⚠️ Errores mostrados: " + rowCount + " registros");
 
         } catch (SQLException e) {
-            System.err.println("❌ Error SQL al mostrar errores: " + e.getMessage());
+            System.err.println("Error SQL al mostrar errores: " + e.getMessage());
             JOptionPane.showMessageDialog(null,
-                    "❌ Error al mostrar los errores:\n" + e.getMessage(),
+                    " Error al mostrar los errores:\n" + e.getMessage(),
                     "Error SQL",
                     JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -94,7 +94,7 @@ public class MostrarErrores {
                 if (conn != null)
                     ConexionOracle.cerrarConexion(conn);
             } catch (SQLException e) {
-                System.err.println("⚠️ Error al cerrar recursos: " + e.getMessage());
+                System.err.println(" Error al cerrar recursos: " + e.getMessage());
             }
         }
     }

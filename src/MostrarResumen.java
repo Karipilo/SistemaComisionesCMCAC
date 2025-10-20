@@ -18,7 +18,7 @@ public class MostrarResumen {
             conn = ConexionOracle.conectar();
             if (conn == null) {
                 JOptionPane.showMessageDialog(null,
-                        "❌ No se pudo conectar a la base de datos.\nRevisa la consola para más detalles.",
+                        "No se pudo conectar a la base de datos.\nRevisa la consola para más detalles.",
                         "Error de Conexión",
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -55,7 +55,7 @@ public class MostrarResumen {
 
             if (rowCount == 0) {
                 JOptionPane.showMessageDialog(null,
-                        "ℹ️ No hay datos en el resumen.\n" +
+                        "No hay datos en el resumen.\n" +
                                 "Ejecuta 'Procesar Comisiones' primero.",
                         "Sin Datos",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -67,19 +67,19 @@ public class MostrarResumen {
 
             JScrollPane scrollPane = new JScrollPane(table);
 
-            JFrame frame = new JFrame("📊 Resumen de Comisiones Mensual - " + rowCount + " registros");
+            JFrame frame = new JFrame(" Resumen de Comisiones Mensual - " + rowCount + " registros");
             frame.setSize(800, 450);
             frame.add(scrollPane);
             frame.setLocationRelativeTo(null);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setVisible(true);
 
-            System.out.println("✅ Resumen mostrado: " + rowCount + " registros");
+            System.out.println("Resumen mostrado: " + rowCount + " registros");
 
         } catch (SQLException e) {
-            System.err.println("❌ Error SQL al mostrar resumen: " + e.getMessage());
+            System.err.println("Error SQL al mostrar resumen: " + e.getMessage());
             JOptionPane.showMessageDialog(null,
-                    "❌ Error al mostrar el resumen:\n" + e.getMessage(),
+                    "Error al mostrar el resumen:\n" + e.getMessage(),
                     "Error SQL",
                     JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -92,7 +92,7 @@ public class MostrarResumen {
                 if (conn != null)
                     ConexionOracle.cerrarConexion(conn);
             } catch (SQLException e) {
-                System.err.println("⚠️ Error al cerrar recursos: " + e.getMessage());
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
             }
         }
     }

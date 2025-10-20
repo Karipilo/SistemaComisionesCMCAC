@@ -92,16 +92,16 @@ public class ConexionOracle {
             // Intentar la conexión
             Connection conn = DriverManager.getConnection(url, props);
 
-            System.out.println("✅ Conectado correctamente a Oracle Cloud");
-            System.out.println("👤 Usuario: " + props.getProperty("user"));
+            System.out.println("Conectado correctamente a Oracle Cloud");
+            System.out.println(" Usuario: " + props.getProperty("user"));
 
             return conn;
 
         } catch (SQLException e) {
-            System.err.println("❌ Error al conectar con Oracle Cloud:");
+            System.err.println(" Error al conectar con Oracle Cloud:");
             System.err.println("   Código: " + e.getErrorCode());
             System.err.println("   Mensaje: " + e.getMessage());
-            System.err.println("\n💡 Posibles soluciones:");
+            System.err.println("\n Posibles soluciones:");
             System.err.println("   1. Verifica que el wallet esté en config/wallet/");
             System.err.println("   2. Verifica las credenciales (usuario y contraseña)");
             System.err.println("   3. Verifica que la URL de conexión sea correcta");
