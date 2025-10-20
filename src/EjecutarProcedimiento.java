@@ -132,7 +132,7 @@ public class EjecutarProcedimiento {
                 if (conn != null)
                     ConexionOracle.cerrarConexion(conn);
             } catch (SQLException e) {
-                System.err.println("⚠️ Error al cerrar conexión: " + e.getMessage());
+                System.err.println("Error al cerrar conexión: " + e.getMessage());
             }
         }
     }
